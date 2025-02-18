@@ -1,8 +1,8 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
+    event = "User FilePost",
     enabled = not require("configs.utils").is_diff_mode(),
-    event = "VeryLazy",
     config = function()
       require('gitsigns').setup {
         signs                        = {

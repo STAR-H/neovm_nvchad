@@ -4,12 +4,26 @@ return {
     event = "VeryLazy",
     opts = {},
   },
+
+  {
+    "folke/todo-comments.nvim",
+    event = {"BufReadPre", "BufNewFile"},
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+    keys = {
+      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+    },
+  },
+
   {
     -- only use in diff mode
     "octol/vim-cpp-enhanced-highlight",
     enabled = require("configs.utils").is_diff_mode(),
     ft = { "cpp" },
   },
+
   {
     "junegunn/vim-easy-align",
     keys = {
@@ -20,8 +34,10 @@ return {
 
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = "User FilePost",
     opts = {
-      scope = { show_start = false, show_end = false },
+      indent = { char = "│", highlight = "IblChar" },
+      scope = { show_start = false, show_end = false, char = "│", highlight = "IblScopeChar" },
       exclude = {
         filetypes = {
           "Trouble",
@@ -36,6 +52,15 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "blankline")
+
+      local hooks = require "ibl.hooks"
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+      require("ibl").setup(opts)
+
+      dofile(vim.g.base46_cache .. "blankline")
+    end,
   },
 
   {
@@ -55,6 +80,7 @@ return {
       })
     end,
   },
+
   {
     "kevinhwang91/nvim-hlslens",
     event = "VeryLazy",
@@ -65,21 +91,48 @@ return {
           local lnum, col = unpack(posList[idx])
           if nearest then
             local cnt = #posList
-            text = ('[%d/%d]'):format(idx, cnt)
+            text = ('(%d/%d)'):format(idx, cnt)
             chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLensNear' } }
           else
-            text = ('[%d]'):format(idx)
+            text = ('(%d)'):format(idx)
             chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLens' } }
           end
           render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
         end
 
       })
-       -- lhsearch colror and keymap for *#
-      -- vim.keymap.set('n', '*', "<Cmd>lua require('hlslens').start()<CR>")
-      -- vim.keymap.set('n', '#', "<Cmd>lua require('hlslens').start()<CR>")
-      -- vim.keymap.set('v', '*', "<Cmd>lua require('hlslens').start()<CR>")
-      -- vim.keymap.set('v', '#', "<Cmd>lua require('hlslens').start()<CR>")
+    end
+  },
+
+  {
+    "stevearc/profile.nvim",
+    enabled = false,
+    config = function()
+      local should_profile = os.getenv("NVIM_PROFILE")
+      if should_profile then
+        require("profile").instrument_autocmds()
+        if should_profile:lower():match("^start") then
+          require("profile").start("*")
+        else
+          require("profile").instrument("*")
+        end
+      end
+
+      local function toggle_profile()
+        local prof = require("profile")
+        if prof.is_recording() then
+          prof.stop()
+          vim.ui.input({ prompt = "Save profile to:", completion = "file", default = "profile.json" }, function(filename)
+            if filename then
+              prof.export(filename)
+              vim.notify(string.format("Wrote %s", filename))
+            end
+          end)
+        else
+          prof.start("*")
+        end
+      end
+      vim.keymap.set("", "<f2>", toggle_profile)
     end
   }
 }

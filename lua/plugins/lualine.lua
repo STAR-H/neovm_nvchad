@@ -1,21 +1,10 @@
 return {
   "nvim-lualine/lualine.nvim",
-  event = "VeryLazy",
+  event = "UIEnter",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "SmiteshP/nvim-navic",
   },
-  init = function()
-    -- TODO: change default statusline to black check nvimtree
-    vim.g.lualine_laststatus = vim.o.laststatus
-    if vim.fn.argc(-1) > 0 then
-      -- set an empty statusline till lualine loads
-      vim.o.statusline = " "
-    else
-      -- hide the statusline on the starter page
-      vim.o.laststatus = 0
-    end
-  end,
   config = function()
     local function diagnostics_component()
       local bufnr = vim.api.nvim_get_current_buf()
@@ -68,8 +57,8 @@ return {
         section_separators   = { left = '', right = '' },
         component_separators = { left = '', right = '' },
         disabled_filetypes = {
-          statusline = {"NvimTree", "tagbar", "undotree", "vista_kind", "nvdash"},
-          winbar     = {"NvimTree", "tagbar", "undotree", "vista_kind"},
+          statusline = {"NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble"},
+          winbar     = {"NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble"},
         },
         ignore_focus = {},
         always_divide_middle = true,

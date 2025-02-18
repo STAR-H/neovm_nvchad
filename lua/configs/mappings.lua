@@ -19,7 +19,7 @@ keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Clear search hightlight
-keymap("n", "<ESC>", "<Cmd>nohl<CR>", opts)
+keymap("n", "<ESC>", ":nohl<CR>", opts)
 
 -- Resize with arrows
 keymap("n", "<up>",    "<Cmd>resize -5<CR>",          opts)

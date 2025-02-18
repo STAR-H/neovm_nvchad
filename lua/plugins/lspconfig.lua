@@ -1,6 +1,28 @@
 return {
   {
+    "williamboman/mason.nvim",
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
+    config = function()
+      dofile(vim.g.base46_cache .. "mason")
+
+      local settings = {
+        PATH = "skip",
+        ui = {
+          icons = {
+            package_pending = " ",
+            package_installed = " ",
+            package_uninstalled = " ",
+          },
+        },
+        max_concurrent_installers = 10,
+      }
+      require("mason").setup(settings)
+    end,
+  },
+
+  {
     "neovim/nvim-lspconfig",
+    event = "User FilePost",
     config = function()
       require("configs.handlers").defaults()
 
@@ -46,6 +68,7 @@ return {
       }
     end,
   },
+
   {
     "SmiteshP/nvim-navic",
     event = "VeryLazy",
