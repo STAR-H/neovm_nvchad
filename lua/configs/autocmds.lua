@@ -1,39 +1,9 @@
 -- load nvchad autocmds
-require "nvchad.autocmds"
-
--- function for diffMode (vi -d)
-function IsDiffMode()
-    if vim.opt.diff:get() then
-        return true
-    else
-        return false
-    end
-end
-
-function ToggleDiagnostics()
-    if vim.diagnostic.is_enabled() then
-        vim.diagnostic.enable(true)
-        vim.notify("Diagnostic Enabled!", vim.log.levels.INFO)
-    else
-        vim.diagnostic.enable(false)
-        vim.notify("Diagnostic Disabled!", vim.log.levels.INFO)
-    end
-end
-
--- close buffer or window layout
-function CloseBuffer()
-    local win_count = vim.fn.winnr('$')
-    if win_count > 1 then
-        vim.cmd("close")
-    else
-        vim.cmd("bd")
-    end
-end
+pcall(require, "nvchad.autocmds")
 
 local function augroup(name)
   return vim.api.nvim_create_augroup("star_" .. name, { clear = true })
 end
-
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {
  group = augroup("highlight_yank"),

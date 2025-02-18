@@ -21,4 +21,5 @@ M.ui = {
   },
 }
 
+-- TODO: remove cheetsheet keymap for q and <ESC>
 return M

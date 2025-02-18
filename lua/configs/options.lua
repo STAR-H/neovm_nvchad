@@ -1,9 +1,3 @@
--- disable nvchad default options
--- require "nvchad.options"
-
--- add yours here!
-require "configs.diagnostics"
-
 local options = {
   backup = false,                          -- creates a backup file
   clipboard = "unnamedplus",               -- allows neovim to access the system clipboard
