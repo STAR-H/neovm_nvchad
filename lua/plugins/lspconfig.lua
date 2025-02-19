@@ -21,25 +21,54 @@ return {
   },
 
   {
+    "williamboman/mason-lspconfig.nvim",
+    -- enabled = not IsDiffMode(),
+    dependencies = "williamboman/mason.nvim",
+    config = function()
+      local servers = {
+        "clangd",
+        "cmake",
+        "lua_ls",
+        "bashls",
+      }
+      require("mason-lspconfig").setup({
+        ensure_installed = servers,
+        automatic_installation = true,
+      })
+    end
+  },
+
+  {
     "neovim/nvim-lspconfig",
     event = "User FilePost",
     config = function()
+      dofile(vim.g.base46_cache .. "codeactionmenu")
+      dofile(vim.g.base46_cache .. "lsp")
       require("configs.handlers").defaults()
 
       local lspconfig = require "lspconfig"
       local lsphandlers = require("configs.handlers")
 
       local servers = { "clangd", "cmake", "bashls",}
-      -- local nvlsp = require "nvchad.configs.lspconfig"
 
       -- lsps with default config
-      -- for _, lsp in ipairs(servers) do
-      --   lspconfig[lsp].setup {
-      --     on_attach = nvlsp.on_attach,
-      --     on_init = nvlsp.on_init,
-      --     capabilities = nvlsp.capabilities,
-      --   }
-      -- end
+      local opts = {}
+      for _, server in pairs(servers) do
+        opts = {
+          on_attach = lsphandlers.on_attach,
+          on_init = lsphandlers.on_init,
+          capabilities = lsphandlers.capabilities,
+        }
+
+        server = vim.split(server, "@")[1]
+
+        local require_ok, self_conf = pcall(require, "configs.lsp." .. server)
+        if require_ok then
+          opts = vim.tbl_deep_extend("keep", self_conf, opts)
+        end
+
+        lspconfig[server].setup(opts)
+      end
 
       -- configuring single server
       lspconfig.lua_ls.setup {
@@ -126,14 +155,6 @@ return {
         lazy_update_context = false,
         click = true
       }
-    end,
-  },
-
-  {
-    "williamboman/mason.nvim",
-    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-    -- extend default config by nvchad
-    opts = function(_, conf)
     end,
   },
 }

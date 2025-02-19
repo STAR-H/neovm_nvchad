@@ -3,6 +3,7 @@ return {
   event = "VeryLazy",
   keys = { { "<leader>s", mode = "n", "<cmd>lua require('flash').jump()<cr>", desc = "flash search jump" }, },
   config = function()
+    dofile(vim.g.base46_cache .. "flash")
     require("flash").setup({
       jump = {
         -- save location in the jumplist
@@ -123,7 +124,7 @@ return {
       },
     })
 
-    vim.api.nvim_set_hl(0, 'FlashLabel', { bold = true, fg = '#FFFFFF', bg = '#D80835' })
-    vim.api.nvim_set_hl(0, 'FlashCurrent', { bold = true, fg = '#FFFFFF', bg = '#2fed21' })
+    -- vim.api.nvim_set_hl(0, 'FlashLabel', { bold = true, fg = '#FFFFFF', bg = '#D80835' })
+    -- vim.api.nvim_set_hl(0, 'FlashCurrent', { bold = true, fg = '#FFFFFF', bg = '#2fed21' })
   end
 }

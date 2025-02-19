@@ -1,7 +1,7 @@
 return {
   "liuchengxu/vista.vim",
   keys = {
-    { "<leader>t", "<cmd>Vista!!<cr>", desc = "[t]agbar Toggle" },
+    { "<leader>t", "<cmd>Vista!!<cr>", desc = "Tagbar Toggle(On/Off)" },
   },
   ft = {"cpp", "c", "python"},
   config = function()

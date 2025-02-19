@@ -1,14 +1,15 @@
 return {
   "folke/trouble.nvim",
   keys = {
-    { "gr",         "<cmd>Trouble lsp toggle<cr>",                      desc = "lsp reference" },
-    { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "diagnostic list(current buffer)" },
+    { "gr",         "<cmd>Trouble lsp toggle<cr>"},
+    { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics list diagnostics info(current buffer)" },
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  init = function()
+    dofile(vim.g.base46_cache .. "trouble")
+  end,
   opts = {
-    position = "bottom",
-    height = 10,
-    padding = false,
-    cycle_results = false,
+    auto_close = true, -- auto close when there are no items
+    warn_no_results = false, -- show a warning when there are no results
   },
 }

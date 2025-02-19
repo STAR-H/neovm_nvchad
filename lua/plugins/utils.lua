@@ -11,9 +11,9 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
     keys = {
-      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
-      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo Trouble Toggle" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope Show" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo Telescope Keyword" },
     },
   },
 
@@ -58,8 +58,6 @@ return {
       local hooks = require "ibl.hooks"
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require("ibl").setup(opts)
-
-      dofile(vim.g.base46_cache .. "blankline")
     end,
   },
 
@@ -82,6 +80,7 @@ return {
   },
 
   {
+    -- TODO: color override
     "kevinhwang91/nvim-hlslens",
     event = "VeryLazy",
     config = function()

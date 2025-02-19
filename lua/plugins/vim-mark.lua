@@ -1,9 +1,9 @@
 return {
   "STAR-H/vim-mark",
   keys = {
-    {"mm", mode = {"n", "x"}, "<Plug>MarkSet", desc = "Set a Mark"},
+    {"mm", mode = {"n", "x"}, "<Plug>MarkSet", desc = "Mark Set/Unset"},
     {"mr", "<Plug>MarkRegex", desc = "Mark by Regx"},
-    {"mc", "<Plug>MarkAllClear", desc = "Clear All Mark"},
+    {"mc", "<Plug>MarkAllClear", desc = "Mark Clear"},
     -- TODO: make n N moree smart can tell vim-mark or normal search
     {"n", "<Plug>MarkSearchOrCurNext", desc = "Mark Search Next"},
     {"N", "<Plug>MarkSearchOrCurPrev", desc = "Mark Search Prev"},

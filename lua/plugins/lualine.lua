@@ -31,54 +31,54 @@ return {
       return string.format("%%#LualineError# %d %%#LualineWarning# %d", error_count, warning_count)
     end
 
-    vim.api.nvim_set_hl(0, "LualineError", {fg = '#FF0000', bold = true})
-    vim.api.nvim_set_hl(0, "LualineWarning", {fg = '#FFA500', bold = true})
-    vim.api.nvim_set_hl(0, "LualineDiagOn", {fg = '#93f542'})
-    vim.api.nvim_set_hl(0, "LualineDiagOff", {fg = '#FF0000'})
+    vim.api.nvim_set_hl(0, "LualineError", { fg = '#FF0000', bold = true })
+    vim.api.nvim_set_hl(0, "LualineWarning", { fg = '#FFA500', bold = true })
+    vim.api.nvim_set_hl(0, "LualineDiagOn", { fg = '#93f542' })
+    vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000' })
 
     local diff = {
       'diff',
       colored = true, -- Displays a colored diff status if set to true
       diff_color = {
         -- Same color values as the general color option can be used here.
-        added    = 'DiffAdd',    -- Changes the diff's added color
+        added    = 'DiffAdd', -- Changes the diff's added color
         modified = 'DiffModified', -- Changes the diff's modified color
         removed  = 'DiffDelete', -- Changes the diff's removed color you
       },
-      symbols = {added = '  ', modified = '  ', removed = '  '}, -- Changes the symbols used by the diff.
+      symbols = { added = '  ', modified = '  ', removed = '  ' }, -- Changes the symbols used by the diff.
     }
-    local navic_status,navic = pcall(require, 'nvim-navic')
-    local noice_status,noice = pcall(require, 'noice')
+    local navic_status, navic = pcall(require, 'nvim-navic')
+    local noice_status, noice = pcall(require, 'noice')
 
     require('lualine').setup {
       options = {
-        icons_enabled = true,
-        theme = 'gruvbox-material', --gruvbox-material / nord
+        icons_enabled        = true,
+        theme                = 'gruvbox-material', --gruvbox-material / nord
         section_separators   = { left = '', right = '' },
         component_separators = { left = '', right = '' },
-        disabled_filetypes = {
-          statusline = {"NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble"},
-          winbar     = {"NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble"},
+        disabled_filetypes   = {
+          statusline = { "NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble" },
+          winbar     = { "NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble" },
         },
-        ignore_focus = {},
+        ignore_focus         = {},
         always_divide_middle = true,
-        globalstatus = false,
-        refresh = {
+        globalstatus         = false,
+        refresh              = {
           statusline = 500,
           tabline    = 1000,
           winbar     = 1000,
         }
       },
       sections = {
-        lualine_a = {'mode'},
-        lualine_b = {diagnostics_component, diff},
+        lualine_a = { 'mode' },
+        lualine_b = { diagnostics_component, diff },
         lualine_c = {
           { 'filename',
-            file_status = true,      -- Displays file status (readonly status, modified status)
-            newfile_status = false,  -- Display new file status (new file means no write after created)
+            file_status = true,     -- Displays file status (readonly status, modified status)
+            newfile_status = false, -- Display new file status (new file means no write after created)
             path = 1,
             symbols = {
-              modified = '[+]',      -- Text to show when the file is modified.
+              modified = '[+]',       -- Text to show when the file is modified.
               readonly = '[RO]',      -- Text to show when the file is non-modifiable or readonly.
               unnamed  = '[No Name]', -- Text to show for unnamed buffers.
               newfile  = '[New]',     -- Text to show for newly created file before first write
@@ -87,9 +87,23 @@ return {
           -- Show @recording messages in statusline
           {
             -- TODO: need reconfigure this after install noice
-            -- require("noice").api.statusline.mode.get,
-            -- cond = require("noice").api.statusline.mode.has,
-            -- color = { fg = "#ff9e64" },
+            -- noice.api.statusline.mode.get,
+            -- cond = noice.api.statusline.mode.has,
+            -- function()
+            --   if noice_status then
+            --     return noice.api.statusline.mode.get
+            --   else
+            --     return
+            --   end
+            -- end,
+            -- cond = function()
+            --   if noice_status then
+            --     return noice.api.statusline.mode.has
+            --   else
+            --     return
+            --   end
+            -- end,
+            color = { fg = "#ff9e64" },
           },
         },
         lualine_x = {
@@ -125,15 +139,15 @@ return {
             color = { fg = "#ff9e64" },
 
           },
-          'filesize', 'filetype'},
-        lualine_y = {'progress', 'selectioncount'},
-        lualine_z = {'location'}
+          'filesize', 'filetype' },
+        lualine_y = { 'progress', 'selectioncount' },
+        lualine_z = { 'location' }
       },
       winbar = {},
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = {'filename'},
+        lualine_c = { 'filename' },
         lualine_x = {
           {
             function()
@@ -152,11 +166,11 @@ return {
               end
             end,
           },
-          'location'},
+          'location' },
         lualine_y = {},
         lualine_z = {}
       },
-      extensions = {'quickfix', 'nvim-tree'}
+      extensions = { 'quickfix', 'nvim-tree' }
     }
   end
 }

@@ -17,6 +17,7 @@ return {
     { "nvim-lua/plenary.nvim" },
   },
   config = function()
+    dofile(vim.g.base46_cache .. "telescope")
     local actions = require "telescope.actions"
     require("telescope").load_extension("fzf")
     require('telescope').setup({

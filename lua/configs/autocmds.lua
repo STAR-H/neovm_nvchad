@@ -41,19 +41,20 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 
--- vim.api.nvim_create_autocmd("DiagnosticChanged", {
---   callback = function()
---     -- check lualine load status
---     local status_ok, lualine = pcall(require, 'lualine')
---     if status_ok then
---       lualine.refresh() -- flash lualine status
---     else
---       vim.notify('lualine is not loaded!', vim.log.levels.WARN)
---     end
---   end,
--- })
+vim.api.nvim_create_autocmd("DiagnosticChanged", {
+  callback = function()
+    -- check lualine load status
+    local status_ok, lualine = pcall(require, 'lualine')
+    if status_ok then
+      lualine.refresh() -- flash lualine status
+    else
+      vim.notify('lualine is not loaded!', vim.log.levels.WARN)
+    end
+  end,
+})
 
 
+-- TODO: check error when only have below filetype open, e.g when only checkhealth buffer opened, press q will come out a error
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
@@ -64,6 +65,8 @@ vim.api.nvim_create_autocmd("FileType", {
     "lspinfo",
     "notify",
     "startuptime",
+    "nvcheatsheet",
+    "nvdash"
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -87,3 +90,27 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.diagnostic.enable(true)  -- enable diagnostics in current buffer
   end,
 })
+
+-- Auto create dir when saving a file, in case some intermediate directory does not exist
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  group = augroup("auto_create_dir"),
+  callback = function(event)
+    if event.match:match("^%w%w+:[\\/][\\/]") then
+      return
+    end
+    local file = vim.uv.fs_realpath(event.match) or event.match
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+  end,
+})
+
+-- resize splits if window got resized
+vim.api.nvim_create_autocmd({ "VimResized" }, {
+  group = augroup("resize_splits"),
+  callback = function()
+    local current_tab = vim.fn.tabpagenr()
+    vim.cmd("tabdo wincmd =")
+    vim.cmd("tabnext " .. current_tab)
+  end,
+})
+
+-- TODO: add a autocmd for base46 default intergation is not equal to plugins folder

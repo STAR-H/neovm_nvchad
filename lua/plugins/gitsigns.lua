@@ -4,6 +4,7 @@ return {
     event = "User FilePost",
     enabled = not require("configs.utils").is_diff_mode(),
     config = function()
+      dofile(vim.g.base46_cache .. "git")
       require('gitsigns').setup {
         signs                        = {
           add          = { text = "+" },
@@ -57,7 +58,8 @@ return {
           map('v', '<leader>gb', '<Cmd>Gitsigns reset_hunk<CR>')
         end
       }
-      vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { fg = '#a89984', bg = '#3c3836' })
+      -- TODO: check color
+      -- vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { fg = '#a89984', bg = '#3c3836' })
     end
   },
   {

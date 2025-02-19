@@ -3,6 +3,10 @@ return {
   enabled = not require("configs.utils").is_diff_mode(),
   event = { "BufReadPost", "BufNewFile" },
   build = ":TsUpdate",   -- auto update installed parser
+  init = function()
+    dofile(vim.g.base46_cache .. "syntax")
+    dofile(vim.g.base46_cache .. "treesitter")
+  end,
   opts = {
     ensure_installed = {
       "html",
