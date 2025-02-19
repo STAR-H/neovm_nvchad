@@ -2,7 +2,6 @@ return {
   -- TOOD: check why open lua file index twice
   "folke/noice.nvim",
   event = "VeryLazy",
-  enabled = false,
   dependencies = {
     "MunifTanjim/nui.nvim",
   },

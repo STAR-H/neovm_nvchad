@@ -45,6 +45,20 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
+local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status_cmp_ok then
+    return
+end
+M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = "none",
+    })
+    -- TODO: modify the signature help
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+        border = "none",
+    })
+
 M.defaults = function()
   dofile(vim.g.base46_cache .. "lsp")
   require("configs.diagnostics")

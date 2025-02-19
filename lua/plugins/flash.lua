@@ -123,8 +123,5 @@ return {
         },
       },
     })
-
-    -- vim.api.nvim_set_hl(0, 'FlashLabel', { bold = true, fg = '#FFFFFF', bg = '#D80835' })
-    -- vim.api.nvim_set_hl(0, 'FlashCurrent', { bold = true, fg = '#FFFFFF', bg = '#2fed21' })
   end
 }

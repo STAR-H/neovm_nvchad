@@ -4,8 +4,6 @@ return {
     { "<leader>n", "<Cmd>NvimTreeToggle<CR>", desc = "NvimTree Toggle" },
   },
   config = function()
-    dofile(vim.g.base46_cache .. "nvimtree")
-
     local function my_on_attach(bufnr)
       local api = require('nvim-tree.api')
       local function opts(desc)
@@ -53,5 +51,7 @@ return {
         dotfiles = true,
       },
     })
+
+    pcall(dofile, vim.g.base46_cache .. "nvimtree")
   end
 }

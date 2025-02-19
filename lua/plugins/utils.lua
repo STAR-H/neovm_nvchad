@@ -53,7 +53,7 @@ return {
       },
     },
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "blankline")
+      pcall(dofile,vim.g.base46_cache .. "blankline")
 
       local hooks = require "ibl.hooks"
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
@@ -101,6 +101,23 @@ return {
 
       })
     end
+  },
+
+  -- autopairing of (){}[] etc
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {
+      fast_wrap = {},
+      disable_filetype = { "TelescopePrompt", "vim" },
+    },
+    config = function(_, opts)
+      require("nvim-autopairs").setup(opts)
+
+      -- setup cmp for autopairs
+      local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+      require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end,
   },
 
   {

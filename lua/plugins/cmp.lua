@@ -28,7 +28,6 @@ return {
     },
   },
   config = function()
-    dofile(vim.g.base46_cache .. "cmp")
     local cmp = require 'cmp'
     local compare = require("cmp.config.compare")
     local kind_icons = {
@@ -59,16 +58,22 @@ return {
       TypeParameter = "𝙏「TypeParameter」",
       Misc          = "「Misc」",
     }
-    cmp.setup({
+
+    local options = {
       snippet = {
         expand = function(args)
           require 'luasnip'.lsp_expand(args.body)
         end,
       },
       window = {
-        completion = { max_width = 80 },
+        completion = {
+          max_width = 60,
+          scrollbar = false,
+          border = "none",
+        },
         documentation = {
           max_width = 120,
+          winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder",
         },
       },
       mapping = cmp.mapping.preset.insert({
@@ -144,7 +149,7 @@ return {
             nvim_lua = "[LUA]",
           })[entry.source.name]
           local function trim(text)
-            local max_width = 50
+            local max_width = 60
             if text and text:len() > max_width then
               text = text:sub(1, max_width) .. "..."
             end
@@ -170,7 +175,9 @@ return {
         disallow_partial_matching       = false,
         disallow_prefix_unmatching      = false,
       },
-    })
+    }
+
+    cmp.setup(options)
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(':', {
       completion = { autocomplete = false },
@@ -181,5 +188,6 @@ return {
         { name = 'cmdline' }
       })
     })
+    dofile(vim.g.base46_cache .. "cmp")
   end
 }

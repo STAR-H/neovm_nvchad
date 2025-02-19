@@ -18,7 +18,6 @@ return {
   },
   dependencies = 'nvim-tree/nvim-web-devicons',
   config = function()
-    dofile(vim.g.base46_cache .. "bufferline")
     require("bufferline").setup {
       options = {
         mode = "buffers", -- set to "tabs" to only show tabpages instead
@@ -55,7 +54,7 @@ return {
             text = "UndoTree",
             text_align = "center",
             separator = true
-          }
+          },
         },
         groups = {
           items = {
@@ -68,7 +67,6 @@ return {
       }
     }
 
-    -- TODO: check the color
-    -- vim.api.nvim_set_hl(0, 'BufferLineIndicatorSelected', {bold = true, fg = '#3498DB'})
+    vim.api.nvim_set_hl(0, 'BufferLineIndicatorSelected', {bold = true, fg = '#3498DB'})
   end
 }

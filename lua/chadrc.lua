@@ -75,14 +75,18 @@ M.ui = {
   statusline = {
     enabled = false,
   },
-  cmp = {
-    style = "flat_dark",
-  },
+  -- cmp = {
+  --   style = "flat_dark",
+  -- },
 }
 
 M.cheatsheet = {
   -- theme = "grid", -- simple/grid
   excluded_groups = { "terminal (t)", "autopairs", "Nvim", "Opens", ":help", "Show" }, -- can add group name or with mode
+}
+
+M.lsp = {
+  signature = false,
 }
 
 -- TODO: remove cheetsheet keymap for q and <ESC>

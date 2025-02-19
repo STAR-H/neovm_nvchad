@@ -16,7 +16,7 @@ local lazy_config = require "configs.lazy"
 -- load plugins
 require("lazy").setup({
   {
-    "NvChad/NvChad",
+    "STAR-H/NvChad",
     lazy = false,
     branch = "v2.5",
     import = "nvchad.plugins",
@@ -26,7 +26,9 @@ require("lazy").setup({
 }, lazy_config)
 
 -- load theme
+-- TODO:load all color file in prevent
 dofile(vim.g.base46_cache .. "defaults")
+dofile(vim.g.base46_cache .. "telescope")
 
 require "configs.options"
 require "configs.autocmds"

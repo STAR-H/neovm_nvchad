@@ -41,6 +41,8 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = "User FilePost",
+    enabled = not require("configs.utils").is_diff_mode(),
+    dependencies = "williamboman/mason-lspconfig.nvim",
     config = function()
       dofile(vim.g.base46_cache .. "codeactionmenu")
       dofile(vim.g.base46_cache .. "lsp")

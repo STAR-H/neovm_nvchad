@@ -7,7 +7,8 @@ return {
     dofile(vim.g.base46_cache .. "syntax")
     dofile(vim.g.base46_cache .. "treesitter")
   end,
-  opts = {
+  config = function()
+  local opts = {
     ensure_installed = {
       "html",
       "python",
@@ -40,5 +41,7 @@ return {
     indent = { enable = false }, -- influnce = indent
     incremental_selection = { enable = false },
     textobjects = { enable = true },
-  },
+  }
+  require'nvim-treesitter.configs'.setup(opts)
+  end,
 }

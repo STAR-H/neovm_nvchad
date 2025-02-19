@@ -53,8 +53,6 @@ vim.api.nvim_create_autocmd("DiagnosticChanged", {
   end,
 })
 
-
--- TODO: check error when only have below filetype open, e.g when only checkhealth buffer opened, press q will come out a error
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
@@ -72,8 +70,11 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
       vim.keymap.set("n", "q", function()
-        vim.cmd("close")
-        pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+        if #vim.api.nvim_list_wins() > 1 then
+          vim.cmd("close")
+        else
+          vim.cmd("bdelete!") -- 仅删除缓冲区，不关闭窗口
+        end
       end, {
         buffer = event.buf,
         silent = true,
