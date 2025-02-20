@@ -1,8 +1,8 @@
 return {
-  -- TOOD: check why open lua file index twice
+  -- TODO: check why open lua file index twice
   "folke/noice.nvim",
   enabled = true,
-  event = "VeryLazy",
+  event = "UIEnter",
   dependencies = {
     "MunifTanjim/nui.nvim",
   },
@@ -26,6 +26,27 @@ return {
             format = { "{message}" },
             win_options = { concealcursor = "n", conceallevel = 3 },
           },
+        },
+        -- TODO: make hover and signature help look better
+        hover = {
+          enabled = true,
+          silent = false, -- set to true to not show a message if hover is not available
+          view = nil, -- when nil, use defaults from documentation
+          ---@type NoiceViewOptions
+          opts = {}, -- merged with defaults from documentation
+        },
+
+        signature = {
+          enabled = true,
+          auto_open = {
+            enabled = true,
+            trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
+            luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
+            throttle = 50, -- Debounce lsp signature help request by 50ms
+          },
+          view = nil, -- when nil, use defaults from documentation
+          ---@type NoiceViewOptions
+          opts = {}, -- merged with defaults from documentation
         },
       },
       -- you can enable a preset for easier configuration
@@ -52,7 +73,7 @@ return {
         -- NOTE: If you enable messages, then the cmdline is enabled automatically.
         -- This is a current Neovim limitation.
         enabled = true,            -- enables the Noice messages UI
-        view_search = "virtualtext",       -- view for search count messages. Set to `false` to disable
+        view_search = false,       -- view for search count messages. Set to `false` to disable
       },
       markdown = {
         hover = {

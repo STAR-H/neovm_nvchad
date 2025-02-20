@@ -75,14 +75,10 @@ M.ui = {
   statusline = {
     enabled = false,
   },
-  -- cmp = {
-  --   style = "flat_dark",
-  -- },
 }
 
--- TODO: may override this feature
 M.cheatsheet = {
-  -- theme = "grid", -- simple/grid
+  theme = "grid", -- simple/grid
   excluded_groups = { "terminal (t)", "autopairs", "Nvim", "Opens", ":help", "Show", "toggle", "jump" }, -- can add group name or with mode
 }
 

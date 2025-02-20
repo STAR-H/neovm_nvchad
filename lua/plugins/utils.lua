@@ -9,7 +9,12 @@ return {
     "folke/todo-comments.nvim",
     event = {"BufReadPre", "BufNewFile"},
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
+    opts = {
+      highlight = {
+        after = "", -- "fg" or "bg" or empty
+      },
+    },
+    -- TODO: check hight only highlight the sign not the text
     keys = {
       { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo-Comments Trouble Toggle" },
       { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo-Comments Telescope Show" },
@@ -62,6 +67,7 @@ return {
   {
     "andersevenrud/nvim_context_vt",
     event = "VeryLazy",
+    enabled = require("configs.utils").is_diff_mode(),
     ft = { 'c', 'cpp', 'lua', 'python' },
     config = function()
       vim.api.nvim_set_hl(0, 'CustomContextVt', { fg = '#928374', bold = true, italic = true })
@@ -80,7 +86,6 @@ return {
   {
     -- replace by noice view_search virtualtext
     "kevinhwang91/nvim-hlslens",
-    enabled = false,
     event = "VeryLazy",
     config = function()
       require('hlslens').setup({
@@ -91,14 +96,16 @@ return {
             local cnt = #posList
             text = ('(%d/%d)'):format(idx, cnt)
             chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLensNear' } }
-          else
-            text = ('(%d)'):format(idx)
-            chunks = { { ' ', 'Ignore' }, { text, 'HlSearchLens' } }
           end
           render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
         end
 
       })
+      local kopts = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
     end
   },
 
@@ -121,7 +128,7 @@ return {
 
   {
     "stevearc/profile.nvim",
-    enabled = true,
+    enabled = false,
     lazy = false,
     config = function()
       local should_profile = os.getenv("NVIM_PROFILE")

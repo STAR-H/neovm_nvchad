@@ -26,8 +26,6 @@ require("lazy").setup({
 }, lazy_config)
 
 -- TODO: mason install output error twice may realted mason.nvim version, but lua_ls attch twice may config issue
--- TODO: add tmux disable pane move when zoomed
--- check the diff mode plugin load situation
 -- make autocmd q to quit in diff mode
 -- load theme
 -- Load all cached colors in prevent
@@ -42,3 +40,4 @@ require "configs.autocmds"
 vim.schedule(function()
   require "configs.mappings"
 end)
+

@@ -30,34 +30,6 @@ return {
   config = function()
     local cmp = require 'cmp'
     local compare = require("cmp.config.compare")
-    local kind_icons = {
-      Text          = "󰉿「Text」",
-      Method        = "ƒ「Method」",
-      Function      = "󰊕「Function」",
-      Constructor   = "「Constructor」",
-      Field         = "󰮄「Field」",
-      Variable      = "󰀫「Variable」",
-      Class         = "𝓒「Class」",
-      Interface     = "「Interface」",
-      Module        = "「Module」",
-      Property      = "󰜢「Property」",
-      Unit          = "󰑭「Unit」",
-      Value         = "󰎠「Value」",
-      Enum          = "「Enum」",
-      Keyword       = "󰌋「Keyword」",
-      Snippet       = "「Snippet」",
-      Color         = "󰏘「Color」",
-      File          = "󰈙「File」",
-      Reference     = "「Reference」",
-      Folder        = "󰉋「Folder」",
-      EnumMember    = "「EnumMember」",
-      Constant      = "󰏿「Constant」",
-      Struct        = "𝓢「Struct」",
-      Event         = "「Event」",
-      Operator      = "󰆕「Operator」",
-      TypeParameter = "𝙏「TypeParameter」",
-      Misc          = "「Misc」",
-    }
 
     local options = {
       snippet = {
@@ -65,9 +37,10 @@ return {
           require 'luasnip'.lsp_expand(args.body)
         end,
       },
+
       window = {
         completion = {
-          max_width = 60,
+          max_width = 70,
           scrollbar = false,
           border = "none",
         },
@@ -76,9 +49,14 @@ return {
           winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder",
         },
       },
+
       mapping = cmp.mapping.preset.insert({
         ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         -- use super tab uncomment below
         -- ["<Tab>"]   = cmp.mapping({
         --     c = function()
@@ -112,12 +90,10 @@ return {
         --         end
         --     end,
         -- }),
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       }),
-      sources = cmp.config.sources({
+
+      sources = cmp.config.sources(
+        {
           {
             name = 'nvim_lsp',
             keyword_length = 3,
@@ -129,45 +105,50 @@ return {
           { name = 'luasnip', keyword_length = 3 },
           { name = 'nvim_lua' },
         },
+
         {
           { name = 'buffer', keyword_length = 3 },
         },
+
         {
           { name = 'path' },
         }),
+
       formatting = {
-        fields = { "abbr", "kind", "menu" },
-        format = function(entry, vim_item)
-          -- Kind icons
-          vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-          -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-          vim_item.menu = ({
-            nvim_lsp = "[LSP]",
-            luasnip  = "[SINP]",
-            buffer   = "[BUF]",
-            path     = "[PATH]",
-            nvim_lua = "[LUA]",
-          })[entry.source.name]
-          local function trim(text)
-            local max_width = 60
-            if text and text:len() > max_width then
-              text = text:sub(1, max_width) .. "..."
+        fields = { "abbr", "menu", "kind" },
+        format = function(entry, item)
+          local icons = require "nvchad.icons.lspkind"
+          local icon = icons[item.kind] or ""
+          local kind = item.kind or ""
+
+          item.kind = icon .. " " .. kind
+
+          local widths = {
+            abbr = 30,
+            menu = 40,
+          }
+
+          for key, width in pairs(widths) do
+            if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
+              item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
             end
-            return text
           end
-          vim_item.abbr = trim(vim_item.abbr)
-          return vim_item
+
+          return item
         end,
       },
+
       view = {
         entries = { name = 'custom', selection_order = 'near_cursor' }
       },
+
       sorting = {
         comparators = {
           compare.exact,
           compare.length,
         },
       },
+
       matching = {
         disallow_fuzzy_matching         = true,
         disallow_fullfuzzy_matching     = true,
@@ -182,11 +163,13 @@ return {
     cmp.setup.cmdline(':', {
       completion = { autocomplete = false },
       mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({
-        { name = 'path' }
-      }, {
-        { name = 'cmdline' }
-      })
+      sources = cmp.config.sources(
+        {
+          { name = 'path' }
+        },
+        {
+          { name = 'cmdline' }
+        })
     })
   end
 }

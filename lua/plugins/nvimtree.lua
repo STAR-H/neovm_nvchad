@@ -27,8 +27,8 @@ return {
       vim.keymap.set('n', '<C-v>', api.node.open.vertical, opts('Open: Vertical Split'))
       vim.keymap.set('n', '<C-x>', api.node.open.horizontal, opts('Open: Horizontal Split'))
       vim.keymap.set('n', '<BS>', api.tree.change_root_to_parent, opts('Up'))
-      vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node(), opts('Change Root Dir'))
-      vim.keymap.set('n', 'x', api.fs.cut(), opts('Cut'))
+      vim.keymap.set('n', 'c', api.tree.change_root_to_node, opts('Change Root Dir'))
+      vim.keymap.set('n', 'x', api.fs.cut, opts('Cut'))
       vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
       -- custom key mappings end
     end
