@@ -5,8 +5,8 @@ return {
     {"mr", "<Plug>MarkRegex", desc = "Mark by Regx"},
     {"mc", "<Plug>MarkAllClear", desc = "Mark Clear"},
     -- TODO: make n N moree smart can tell vim-mark or normal search
-    {"n", "<Plug>MarkSearchOrCurNext", desc = "Mark Search Next"},
-    {"N", "<Plug>MarkSearchOrCurPrev", desc = "Mark Search Prev"},
+    {"n", "<Plug>MarkSearchCurrentNext", desc = "Mark Search Next"},
+    {"N", "<Plug>MarkSearchCurrentPrev", desc = "Mark Search Prev"},
   },
   branch = "master",
   dependencies = "inkarkat/vim-ingo-library",

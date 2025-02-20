@@ -8,22 +8,22 @@ local M = {}
 M.base46 = {
   theme = "gruvbox",
   integrations = {
-    "dap",
-    "flash",
-    "blankline",
-    "bufferline",
-    "cmp",
-    "git",
-    "lsp",
-    "mason",
-    "nvcheatsheet",
-    "nvimtree",
-    "syntax",
-    "telescope",
-    "treesitter",
-    "trouble",
-    "whichkey",
-    "codeactionmenu",
+  "defaults",
+  "telescope",
+  "flash",
+  "dap",
+  "cmp",
+  "git",
+  "lsp",
+  "mason",
+  "nvcheatsheet",
+  "nvimtree",
+  "syntax",
+  "treesitter",
+  "trouble",
+  "whichkey",
+  "codeactionmenu",
+  "blankline",
   },
 }
 
@@ -80,14 +80,14 @@ M.ui = {
   -- },
 }
 
+-- TODO: may override this feature
 M.cheatsheet = {
   -- theme = "grid", -- simple/grid
-  excluded_groups = { "terminal (t)", "autopairs", "Nvim", "Opens", ":help", "Show" }, -- can add group name or with mode
+  excluded_groups = { "terminal (t)", "autopairs", "Nvim", "Opens", ":help", "Show", "toggle", "jump" }, -- can add group name or with mode
 }
 
 M.lsp = {
+  -- conflict with noice signature help
   signature = false,
 }
-
--- TODO: remove cheetsheet keymap for q and <ESC>
 return M

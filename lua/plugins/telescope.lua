@@ -1,6 +1,4 @@
 return {
-  -- TODO: add picker for search in current buffer
-  -- and optimate the live grep behavior
   "nvim-telescope/telescope.nvim",
   branch = '0.1.x',
   cmd = "Telescope",
@@ -10,7 +8,7 @@ return {
     { "<leader>fg", "<cmd>Telescope live_grep<cr>",                 desc = 'telescope live grep' },
     { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = 'telescope list buffers' },
     { "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = 'telescope fuzzy search' },
-    -- TODO: add a keymap for lsp symbols
+    { "<leader>ft", "<cmd>Telescope lsp_document_symbols<cr>",       desc = 'telescope current buffer tags' },
   },
   dependencies = {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -27,7 +25,7 @@ return {
         selection_caret = "  ",
         path_display = { "truncate" },
         sorting_strategy = "descending",
-        vimgrep_arguments = {
+        vimgrep_arguments = { -- use by live grep and grep string
           "rg",
           "--color=never",
           "--no-heading",
@@ -50,9 +48,16 @@ return {
             ["<C-p>"] = actions.cycle_history_prev,
             ["<C-j>"] = actions.move_selection_next,
             ["<C-k>"] = actions.move_selection_previous,
+            ["<C-f>"] = actions.preview_scrolling_down,
+            ["<C-b>"] = actions.preview_scrolling_up,
             ["<C-e>"] = actions.close,
           },
-          n = { ["<C-e>"] = actions.close },
+          n = {
+            ["<C-e>"] = actions.close,
+            ["q"]     = actions.close,
+            ["<C-f>"] = actions.preview_scrolling_down,
+            ["<C-b>"] = actions.preview_scrolling_up,
+          },
         },
       },
       pickers = {
@@ -70,10 +75,11 @@ return {
           previewer = false,
         },
         live_grep = {
-          disable_coordinates = false,
+          disable_coordinates = true,
         },
         current_buffer_fuzzy_find = {
           skip_empty_lines = true,
+          results_ts_highlight = false,
         }
       },
     })

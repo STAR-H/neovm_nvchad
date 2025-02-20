@@ -1,11 +1,13 @@
 return {
   "folke/which-key.nvim",
-  keys = { "<leader>", "<c-w>", '"', "'", "c", "v", "g" },
+  enabled = false, -- replace by nvcheetsheet
   cmd = "WhichKey",
   opts = function()
-    dofile(vim.g.base46_cache .. "whichkey")
     local settings = {
       delay = 1000,
+      icons = {
+        mappings = false, -- not use icon
+      },
     }
     return settings
   end,

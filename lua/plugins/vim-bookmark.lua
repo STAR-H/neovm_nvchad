@@ -1,12 +1,12 @@
 return {
   "MattesGroeger/vim-bookmarks",
   keys = {
-    { '<Space>bb', "<cmd>BookmarkToggle<CR>",   desc = "BookmarkToggle" },
-    { '<Space>bi', "<cmd>BookmarkAnnotate<CR>", desc = "BookmarkAnnotate" },
-    { '<Space>bj', "<cmd>BookmarkNext<CR>",     desc = "BookmarkNext" },
-    { '<Space>bk', "<cmd>BookmarkPrev<CR>",     desc = "BookmarkPrev" },
-    { '<Space>ba', "<cmd>BookmarkShowAll<CR>",  desc = "BookmarkShowAll" },
-    { '<Space>bc', "<cmd>BookmarkClearAll<CR>", desc = "BookmarkClearAll" },
+    { '<Space>bb', "<cmd>BookmarkToggle<CR>",   desc = "Bookmark Toggle" },
+    { '<Space>bi', "<cmd>BookmarkAnnotate<CR>", desc = "Bookmark Annotate" },
+    { '<Space>bj', "<cmd>BookmarkNext<CR>",     desc = "Bookmark Go to Next" },
+    { '<Space>bk', "<cmd>BookmarkPrev<CR>",     desc = "Bookmark Go to Prev" },
+    { '<Space>ba', "<cmd>BookmarkShowAll<CR>",  desc = "Bookmark Show All Bookmark" },
+    { '<Space>bc', "<cmd>BookmarkClearAll<CR>", desc = "Bookmark Clear All Bookmark" },
   },
   config = function()
     vim.g.bookmark_no_default_key_mappings = 1

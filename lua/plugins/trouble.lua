@@ -5,9 +5,6 @@ return {
     { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics list diagnostics info(current buffer)" },
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  init = function()
-    dofile(vim.g.base46_cache .. "trouble")
-  end,
   opts = {
     auto_close = true, -- auto close when there are no items
     warn_no_results = false, -- show a warning when there are no results

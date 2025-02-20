@@ -25,10 +25,16 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
+-- TODO: mason install output error twice may realted mason.nvim version, but lua_ls attch twice may config issue
+-- TODO: add tmux disable pane move when zoomed
+-- check the diff mode plugin load situation
+-- make autocmd q to quit in diff mode
 -- load theme
--- TODO:load all color file in prevent
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "telescope")
+-- Load all cached colors in prevent
+local base46_cache = require "chadrc".base46.integrations or {}
+for _, v in ipairs(base46_cache) do
+  dofile(vim.g.base46_cache .. v)
+end
 
 require "configs.options"
 require "configs.autocmds"

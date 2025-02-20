@@ -86,23 +86,18 @@ return {
           },
           -- Show @recording messages in statusline
           {
-            -- TODO: need reconfigure this after install noice
-            -- noice.api.statusline.mode.get,
-            -- cond = noice.api.statusline.mode.has,
-            -- function()
-            --   if noice_status then
-            --     return noice.api.statusline.mode.get
-            --   else
-            --     return
-            --   end
-            -- end,
-            -- cond = function()
-            --   if noice_status then
-            --     return noice.api.statusline.mode.has
-            --   else
-            --     return
-            --   end
-            -- end,
+            function()
+              if noice_status then
+                return noice.api.status.mode.get()
+              end
+            end,
+            cond = function()
+              if noice_status then
+                return noice.api.status.mode.has()
+              else
+                return false
+              end
+            end,
             color = { fg = "#ff9e64" },
           },
         },
@@ -129,7 +124,7 @@ return {
               if rawget(vim, "lsp") then
                 for _, client in ipairs(vim.lsp.get_clients()) do
                   if client.attached_buffers[stbufnr] then
-                    return (vim.o.columns > 100 and "  LSP " .. client.name .. " ") or "  LSP "
+                    return (vim.o.columns > 100 and "  " .. client.name .. " ") or " LSP "
                   end
                 end
               end

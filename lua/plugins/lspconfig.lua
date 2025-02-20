@@ -2,9 +2,8 @@ return {
   {
     "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
+    dependencies = "williamboman/mason-lspconfig.nvim",
     config = function()
-      dofile(vim.g.base46_cache .. "mason")
-
       local settings = {
         PATH = "skip",
         ui = {
@@ -14,38 +13,28 @@ return {
             package_uninstalled = " ",
           },
         },
-        max_concurrent_installers = 10,
+        max_concurrent_installers = 4,
       }
-      require("mason").setup(settings)
-    end,
-  },
-
-  {
-    "williamboman/mason-lspconfig.nvim",
-    -- enabled = not IsDiffMode(),
-    dependencies = "williamboman/mason.nvim",
-    config = function()
       local servers = {
         "clangd",
         "cmake",
         "lua_ls",
         "bashls",
       }
+      require("mason").setup(settings)
       require("mason-lspconfig").setup({
         ensure_installed = servers,
         automatic_installation = true,
       })
-    end
+    end,
   },
 
   {
     "neovim/nvim-lspconfig",
     event = "User FilePost",
     enabled = not require("configs.utils").is_diff_mode(),
-    dependencies = "williamboman/mason-lspconfig.nvim",
+    dependencies = "williamboman/mason.nvim",
     config = function()
-      dofile(vim.g.base46_cache .. "codeactionmenu")
-      dofile(vim.g.base46_cache .. "lsp")
       require("configs.handlers").defaults()
 
       local lspconfig = require "lspconfig"
@@ -154,7 +143,6 @@ return {
         depth_limit = 10,
         depth_limit_indicator = "..",
         safe_output = true,
-        lazy_update_context = false,
         click = true
       }
     end,

@@ -11,9 +11,9 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
     keys = {
-      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo Trouble Toggle" },
-      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope Show" },
-      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo Telescope Keyword" },
+      { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo-Comments Trouble Toggle" },
+      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo-Comments Telescope Show" },
+      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo-Comments Telescope Keyword" },
     },
   },
 
@@ -28,7 +28,7 @@ return {
     "junegunn/vim-easy-align",
     keys = {
       -- for unknown reason can use <Cmd> must use :
-      { "ga", mode = { "n", "x" }, ":EasyAlign<CR>" },
+      { "ga", mode = { "n", "x" }, ":EasyAlign<CR>" , desc = "EasyAlign Toggle +"},
     }
   },
 
@@ -53,8 +53,6 @@ return {
       },
     },
     config = function(_, opts)
-      pcall(dofile,vim.g.base46_cache .. "blankline")
-
       local hooks = require "ibl.hooks"
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
       require("ibl").setup(opts)
@@ -80,8 +78,9 @@ return {
   },
 
   {
-    -- TODO: color override
+    -- replace by noice view_search virtualtext
     "kevinhwang91/nvim-hlslens",
+    enabled = false,
     event = "VeryLazy",
     config = function()
       require('hlslens').setup({
@@ -122,7 +121,8 @@ return {
 
   {
     "stevearc/profile.nvim",
-    enabled = false,
+    enabled = true,
+    lazy = false,
     config = function()
       local should_profile = os.getenv("NVIM_PROFILE")
       if should_profile then

@@ -2,9 +2,16 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = "User FilePost",
+    keys = {
+      {"]g", "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", desc = "Gitsigns next_hunk<CR>"},
+      {"[g", "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", desc = "Gitsigns prev_hunk"},
+      {"gs", "<Cmd>Gitsigns preview_hunk<CR>", desc = "Gitsigns preview_hunk"},
+      {"gu", "<Cmd>Gitsigns reset_hunk<CR>", desc = "Gitsigns reset_hunk"},
+      {"<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", desc = "Gitsigns Toggle Current Line Blame"},
+    },
+    -- add key map for nvcheatsheet
     enabled = not require("configs.utils").is_diff_mode(),
     config = function()
-      dofile(vim.g.base46_cache .. "git")
       require('gitsigns').setup {
         signs                        = {
           add          = { text = "+" },
@@ -55,11 +62,10 @@ return {
           map('n', 'gs', '<Cmd>Gitsigns preview_hunk<CR>')
           map('n', 'gu', '<Cmd>Gitsigns reset_hunk<CR>')
           map('v', 'gu', '<Cmd>Gitsigns reset_hunk<CR>')
-          map('v', '<leader>gb', '<Cmd>Gitsigns reset_hunk<CR>')
+          map('n', '<leader>gb', '<Cmd>Gitsigns toggle_current_line_blame<CR>')
         end
       }
-      -- TODO: check color
-      -- vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { fg = '#a89984', bg = '#3c3836' })
+      vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { fg = '#a89984'})
     end
   },
   {

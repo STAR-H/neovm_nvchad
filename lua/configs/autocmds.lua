@@ -80,6 +80,17 @@ vim.api.nvim_create_autocmd("FileType", {
         silent = true,
         desc = "Quit buffer",
       })
+      vim.keymap.set("n", "<ESC>", function()
+        if #vim.api.nvim_list_wins() > 1 then
+          vim.cmd("close")
+        else
+          vim.cmd("bdelete!") -- 仅删除缓冲区，不关闭窗口
+        end
+      end, {
+        buffer = event.buf,
+        silent = true,
+        desc = "Quit buffer",
+      })
     end)
   end,
 })
@@ -113,5 +124,3 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
     vim.cmd("tabnext " .. current_tab)
   end,
 })
-
--- TODO: add a autocmd for base46 default intergation is not equal to plugins folder
